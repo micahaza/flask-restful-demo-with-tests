@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  api:
+    container_name: flask_api
+    build: .
+    links:
+     - db
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./src:/opt/myapp
+  db:
+    image: mysql
+    container_name: mysql
+    ports:
+      - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro
